@@ -40,7 +40,7 @@ pip install -r requirements.txt
 ## 致謝
 
 - 基於 [google/prompt-to-prompt](https://github.com/google/prompt-to-prompt) 開發
-- 原論文: Textualize Visual Prompt for Image Editing via Diffusion Bridge (AAAI'25)
+- 原論文: [Textualize Visual Prompt for Image Editing via Diffusion Bridge (AAAI'25)](https://arxiv.org/abs/2501.03495)
 
 ## Disclaimer
 
