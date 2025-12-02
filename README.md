@@ -7,7 +7,7 @@
 
 本專案是論文 "Textualize Visual Prompt for Image Editing via Diffusion Bridge" 的非官方實現，基於 [Prompt-to-Prompt](https://github.com/google/prompt-to-prompt) 框架開發。
 
-![DEMO](./experiments/20251203_014400/cross_replace=[0.2,%201.0],self_replace=0.0,encoded=False,guidance_scale=7.5,/test_image1.png)
+![DEMO](./experiments/20251203_014400/cross_replace=[0.2,%201.0],self_replace=0.0,encoded=False,guidance_scale=3.5,/test_image1.png)
 
 ## 專案結構
 
