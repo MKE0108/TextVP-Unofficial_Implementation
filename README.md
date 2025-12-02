@@ -10,12 +10,12 @@
 ## 專案結構
 
 ```
-├── experiment_config.py    # 實驗配置管理
+├── experiment_config.py     # 實驗配置管理
 ├── ptp_utils.py            # Prompt-to-Prompt 工具函數
 ├── seq_aligner.py          # 序列對齊工具
 ├── image_utils.py          # 圖像處理工具
 ├── inversion.py            # DDIM Inversion
-├── TextVP.ipynb            # 主要訓練/測試 Notebook
+├── main.ipynb              # 主要訓練/測試 Notebook
 ├── data_generator/         # 資料生成工具
 │   └── prompt2prompt_gen_datapair.ipynb # 生成 Prompt-to-Prompt 資料對 (prompt-to-prompt 版本)
 │   └── inp2p.py            # 生成 Prompt-to-Prompt 資料對(intructpix2pix 版本)
