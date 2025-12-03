@@ -232,6 +232,12 @@ class ExperimentConfig:
     def __post_init__(self):
         if self.optimizer_cls is None:
             self.optimizer_cls = torch.optim.Adam
+        if self.exp_dir =="new":
+            resolved_dir = get_or_create_exp_dir(
+                base_dir=self.base_dir,
+                exp_dir=self.exp_dir
+            )
+            self.exp_dir= resolved_dir.split(os.sep)[-1]
     
     def resolve_exp_dir(self) -> str:
         """
@@ -268,6 +274,7 @@ class ExperimentConfig:
             )
         else:
             resolved_dir = self.resolve_exp_dir()
+        
         
         configs = []
         for cross_replace_step in self.option_cross_replace_step:

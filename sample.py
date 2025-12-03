@@ -198,8 +198,21 @@ class AttentionRefine(AttentionControlEdit):
 # Main Sampling Functions
 # ==============================================================================
 
+def get_torch_dtype_from_string(dtype_str):
+    """Convert a string to a torch dtype."""
+    if dtype_str == "float16":
+        return torch.float16
+    elif dtype_str == "bfloat16":
+        return torch.bfloat16
+    elif dtype_str == "float32":
+        return torch.float32
+    else:
+        raise ValueError(f"Unsupported dtype string: {dtype_str}")
+
 def load_model(device: str = "cuda:0", dtype=torch.bfloat16):
     """Load Stable Diffusion model."""
+    if isinstance(dtype, str):
+        dtype = get_torch_dtype_from_string(dtype)
     print(f"Loading Stable Diffusion model on {device}...")
     ldm_stable = StableDiffusionPipeline.from_pretrained(
         "sd-legacy/stable-diffusion-v1-5", 
@@ -294,6 +307,9 @@ def main():
         type=str, default="png",
         help="Image extension to search for (default: png)"
     )
+    # Add dtype argument for model loading
+    parser.add_argument("--dtype", type=str, default="bfloat16", choices=["float16", "bfloat16", "float32"],
+                        help="Data type for model loading")
     
     args = parser.parse_args()
     
@@ -315,7 +331,7 @@ def main():
     
     # Load model
     device = args.device
-    ldm_stable = load_model(device=device)
+    ldm_stable = load_model(device=device, dtype=args.dtype)
     
     # Load learned embedding
     print(f"Loading checkpoint from: {args.checkpoint}")

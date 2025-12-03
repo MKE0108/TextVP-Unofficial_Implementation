@@ -104,6 +104,7 @@ python run_experiment.py --mode full \
 | `--save_interval` | `1` | 每幾個 epoch 儲存一次 |
 | `--test_epochs` | `"[0,5,10,20,30,40,49]"` | 測試時使用的 epoch |
 | `--device` | `cuda:0` | 使用的設備 |
+| `--dtype` | `bfloat16` | 模型資料類型 (`float16`/`bfloat16`/`float32`) |
 
 > **注意**: 列表參數請使用 Python 語法的字串格式，例如 `"[1, 3.5, 7.5]"` 或 `"[[0.2, 1.0]]"`
 
@@ -139,6 +140,7 @@ python sample.py \
 | `--output_dir` | `-o` | 輸出目錄 |
 | `--device` | `-d` | 使用的設備（預設 `cuda:0`） |
 | `--ext` | `-e` | 圖片副檔名（預設 `png`） |
+| `--dtype` | | 模型資料類型（預設 `bfloat16`，可選 `float16`/`float32`） |
 
 ## 致謝
 

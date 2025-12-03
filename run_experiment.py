@@ -216,6 +216,15 @@ class AttentionRefine(AttentionControlEdit):
 def load_model(device_name: str = "cuda:0", dtype=torch.bfloat16):
     """Load Stable Diffusion model."""
     global device, ldm_stable, tokenizer
+    if isinstance(dtype, str):
+        if dtype == "float16":
+            dtype = torch.float16
+        elif dtype == "bfloat16":
+            dtype = torch.bfloat16
+        elif dtype == "float32":
+            dtype = torch.float32
+        else:
+            raise ValueError(f"Unsupported dtype string: {dtype}")
     
     device = torch.device(device_name) if torch.cuda.is_available() else torch.device('cpu')
     print(f"Loading Stable Diffusion model on {device}...")
@@ -577,11 +586,13 @@ Examples:
                         help="Use beta weighting for loss")
     parser.add_argument("--test_epochs", type=str, default="[0, 5, 10, 20, 30, 40, 49]",
                         help="Epochs to test, e.g. '[0, 5, 10, 20, 30, 40, 49]'")
-    
+    # Add dtype argument for model loading
+    parser.add_argument("--dtype", type=str, default="bfloat16", choices=["float16", "bfloat16", "float32"],
+                        help="Data type for model loading")
     args = parser.parse_args()
     
     # Load model
-    load_model(args.device)
+    load_model(args.device, dtype=args.dtype)
     
     if args.mode == "train":
         # Validate required arguments
@@ -701,8 +712,8 @@ Examples:
         print("\n" + "="*60)
         print("PHASE 2: TESTING")
         print("="*60)
-        exp_dir = cfg.resolve_exp_dir()
-        run_testing(exp_dir.split("/")[-1])
+
+        run_testing(cfg.exp_dir)
         
         print("\n" + "="*60)
         print("FULL PIPELINE COMPLETED!")

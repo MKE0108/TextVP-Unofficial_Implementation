@@ -1,0 +1,31 @@
+{
+  "exp_dir": "experiments/20251204_012856",
+  "exp_name": "cross_replace=[0.2, 1.0],self_replace=0.0,encoded=False,guidance_scale=3.5,",
+  "source_image_path": "dataset_old/test_1201(pair_data)/B_05.png",
+  "target_image_path": "dataset_old/test_1201(pair_data)/A_05.png",
+  "test_image_pattern": "dataset_old/test_1130(single_data)/*.png",
+  "low_resource": false,
+  "num_diffusion_steps": 50,
+  "cross_replace_step": [
+    0.2,
+    1.0
+  ],
+  "guidance_scale": 3.5,
+  "encoded_emb": false,
+  "self_replace_step": 0.0,
+  "coarse_description": "a watercolor painting",
+  "lr": 0.001,
+  "num_epochs": 50,
+  "save_interval": 1,
+  "beta_weighting": true,
+  "test_epochs": [
+    0,
+    5,
+    10,
+    20,
+    30,
+    40,
+    49
+  ],
+  "optimizer_cls": "<class 'torch.optim.adamw.AdamW'>"
+}
