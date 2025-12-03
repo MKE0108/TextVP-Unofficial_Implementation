@@ -3,7 +3,7 @@
   "base_dir": "experiments/",
   "source_image_path": "/home/ksp0108/workspace/HW/video_gen/prompt-to-prompt/dataset/test_1201(pair_data)/B_05.png",
   "target_image_path": "/home/ksp0108/workspace/HW/video_gen/prompt-to-prompt/dataset/test_1201(pair_data)/A_05.png",
-  "test_image_pattern": "/home/ksp0108/workspace/HW/video_gen/prompt-to-prompt/dataset/test_1130(single_data)/*.png",
+  "test_image_pattern": "/home/ksp0108/workspace/HW/video_gen/prompt-to-prompt/dataset_old/test_1130(single_data)/*.png",
   "low_resource": false,
   "num_diffusion_steps": 50,
   "option_guidance_scale": [

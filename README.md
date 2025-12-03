@@ -12,6 +12,8 @@
 ## 專案結構
 
 ```
+├── run_experiment.py        # 訓練/測試腳本 (命令列版本)
+├── sample.py               # 推論腳本
 ├── experiment_config.py     # 實驗配置管理
 ├── ptp_utils.py            # Prompt-to-Prompt 工具函數
 ├── seq_aligner.py          # 序列對齊工具
@@ -21,7 +23,7 @@
 ├── data_generator/         # 資料生成工具
 │   └── prompt2prompt_gen_datapair.ipynb # 生成 Prompt-to-Prompt 資料對 (prompt-to-prompt 版本)
 │   └── inp2p.py            # 生成 Prompt-to-Prompt 資料對(intructpix2pix 版本)
-├── dataset/                # 資料集
+├── dataset_old/                # 資料集
 └── experiments/            # 實驗輸出目錄
 ```
 
@@ -33,9 +35,77 @@ pip install -r requirements.txt
 
 ## 使用方法
 
-1. 準備資料集放置於 `dataset/` 目錄
+### 方法一：使用 Notebook
+
+1. 準備資料集放置於 `dataset_old/` 目錄
 2. 使用 `main.ipynb` 進行訓練和測試
 3. 實驗結果會自動保存至 `experiments/` 目錄
+
+### 方法二：使用命令列腳本 (推薦)
+
+使用 `run_experiment.py` 進行訓練和測試：
+
+#### 訓練
+
+```bash
+python run_experiment.py --mode train \
+    --exp_dir new \
+    --source_image dataset_old/test_1201\(pair_data\)/B_05.png \
+    --target_image dataset_old/test_1201\(pair_data\)/A_05.png \
+    --test_image_pattern "dataset_old/test_1130\(single_data\)/*.png" \
+    --coarse_description "a watercolor painting" \
+    --guidance_scale "[1, 3.5, 7.5]" \
+    --cross_replace_step "[[0.2, 1.0]]" \
+    --self_replace_step "[0.0]" \
+    --num_epochs 40 \
+    --lr 0.001 \
+    --optimizer AdamW
+```
+
+#### 測試
+
+```bash
+# 測試最新的實驗
+python run_experiment.py --mode test
+
+# 測試指定的實驗
+python run_experiment.py --mode test --exp_dir 20251203_014400
+```
+
+#### 完整流程 (訓練 + 測試)
+
+```bash
+python run_experiment.py --mode full \
+    --source_image dataset_old/test_1201\(pair_data\)/B_05.png \
+    --target_image dataset_old/test_1201\(pair_data\)/A_05.png \
+    --test_image_pattern "dataset_old/test_1130(single_data)/*.png" \
+    --coarse_description "a watercolor painting" \
+    --guidance_scale "[1, 3.5, 7.5]" 
+```
+
+#### 訓練參數說明
+
+| 參數 | 預設值 | 說明 |
+|------|--------|------|
+| `--mode` | (必填) | 模式：`train`、`test` 或 `full` |
+| `--exp_dir` | `new` | 實驗目錄名稱（`new` 會自動建立帶時間戳的目錄） |
+| `--base_dir` | `experiments/` | 實驗基礎目錄 |
+| `--source_image` | (必填) | BEFORE 圖片路徑 |
+| `--target_image` | (必填) | AFTER 圖片路徑 |
+| `--test_image_pattern` | `""` | 測試圖片的 glob pattern |
+| `--coarse_description` | `"a watercolor painting"` | 風格描述詞（用於初始化） |
+| `--guidance_scale` | `"[7.5]"` | Guidance scale 搜尋列表 |
+| `--cross_replace_step` | `"[[0.2, 1.0]]"` | Cross attention 替換範圍 [[begin,end]] |
+| `--self_replace_step` | `"[0.0]"` | Self attention 替換範圍 [[begin,end]] ,or [end,..] (預設begin=0)|
+| `--encoded_emb` | `"[False]"` | 是否訓練 encoded embedding |
+| `--num_epochs` | `50` | 訓練 epoch 數 |
+| `--lr` | `0.001` | 學習率 |
+| `--optimizer` | `AdamW` | 優化器 (Adam/AdamW/SGD) |
+| `--save_interval` | `1` | 每幾個 epoch 儲存一次 |
+| `--test_epochs` | `"[0,5,10,20,30,40,49]"` | 測試時使用的 epoch |
+| `--device` | `cuda:0` | 使用的設備 |
+
+> **注意**: 列表參數請使用 Python 語法的字串格式，例如 `"[1, 3.5, 7.5]"` 或 `"[[0.2, 1.0]]"`
 
 ## 推論 (Sampling)
 
@@ -55,7 +125,7 @@ python sample.py \
 python sample.py \
     -c ./experiments/20251203_014400/cross_replace=\[0.2,\ 1.0\],self_replace=0.0,encoded=False,guidance_scale=3.5,/epoch_13.pt \
     -cfg ./experiments/20251203_014400/cross_replace=\[0.2,\ 1.0\],self_replace=0.0,encoded=False,guidance_scale=3.5,/train_config.json \
-    -i ./dataset_old/test_1130(single_data) \
+    -i ./dataset_old_old/test_1130\(single_data\)(single_data) \
     -o ./sample
 ```
 
