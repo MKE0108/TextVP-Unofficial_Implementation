@@ -92,7 +92,7 @@ python run_experiment.py --mode full \
 | `--base_dir` | `experiments/` | 實驗基礎目錄 |
 | `--source_image` | (必填) | BEFORE 圖片路徑 |
 | `--target_image` | (必填) | AFTER 圖片路徑 |
-| `--test_image_pattern` | `""` | 測試圖片的 glob pattern |
+| `--test_image_pattern` | `""` | 測試圖片的 glob pattern (如 "dataset_old/test_1130(single_data)/*.png" ) |
 | `--coarse_description` | `"a watercolor painting"` | 風格描述詞（用於初始化） |
 | `--guidance_scale` | `"[7.5]"` | Guidance scale 搜尋列表 |
 | `--cross_replace_step` | `"[[0.2, 1.0]]"` | Cross attention 替換範圍 [[begin,end]] |
