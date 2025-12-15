@@ -23,7 +23,7 @@
 ├── data_generator/         # 資料生成工具
 │   └── prompt2prompt_gen_datapair.ipynb # 生成 Prompt-to-Prompt 資料對 (prompt-to-prompt 版本)
 │   └── inp2p.py            # 生成 Prompt-to-Prompt 資料對(intructpix2pix 版本)
-├── dataset_old/                # 資料集
+├── Dataset                # 資料集
 └── experiments/            # 實驗輸出目錄
 ```
 
@@ -150,3 +150,89 @@ python sample.py \
 ## Disclaimer
 
 This is an unofficial implementation and is not affiliated with the original authors.
+
+# For Po Han's Update
+
+## For visii
+要先另外創一個conda環境 (跟TextVP分開)
+並且 ```cd visii```
+
+### 跑training
+```
+python train.py \
+    --image_folder ./Dataset/landscape_sunset \
+    --subfolder train \
+    --expname landscape_sunset_test  \
+    --file_prefix mountain_01   \
+    --cuda_device cuda:1
+```
+- 跑完後結果會存在visii/logs資料夾
+
+### 跑testing
+```
+python batch_test.py \
+    --project_name "landscape_sunset" \
+    --script_path "test.py"   \
+    --source_dir "Dataset/landscape_sunset/test" \
+    --output_dir "results/landscape_sunset_test" \
+    --log_folder_name "landscape_sunset" 
+```
+- 跑完後結果存在visii/results資料夾
+
+## For TextVP
+
+### 資料集解說
+例子: Dataset/cat_watercolor
+- Before(AI) -> After(AI): 前面5對pair照, 由```data_generator/p2p_gen_datapair.py``` 所生出
+- Before(真實圖片) -> After(AI): 後面5對pair照, before找去網路找真實圖片, 接著用data_generator/inp2p.py所生出 
+- 第1對pair (AI -> AI) 會放在Dataset/cat_watercolor/train資料夾, 其餘pair都放入Dataset/cat_watercolor/test資料夾
+- 也可以用p2p_gen_datapair.py生出before的AI照片, 再用inp2p.py生出after照片 (因為有時p2p_gen_datapair的after效果不好, 結構會跑掉)
+
+### 跑 run_experimnent.py
+```
+    python Code/run_experiment.py --mode full \
+        --device "cuda:1" \
+        --exp_dir dog_cat \
+        --source_image Dataset/dog_cat/train/dog_01_before.png \
+        --target_image Dataset/dog_cat/train/dog_01_after.png \
+        --test_image_pattern "Dataset/dog_cat/test/*_before.png" \
+        --coarse_description "a cat" \
+        --guidance_scale "[1, 3.5, 7.5]" \
+        --cross_replace_step "[[0.2, 1.0]]" \
+        --num_epochs 50    
+```
+- 結果會存在experiments/dog_cat裡面
+
+### 跑 sample.py -> 生成圖片
+```
+    python Code/sample.py \
+        --device "cuda:1" \
+        --checkpoint experiments/dog_cat/epoch_1.pt \
+        --config experiments/dog_cat/train_config.json \
+        --image_dir "Dataset/dog_cat/test/*before.png" \
+        --output_dir experiments/dog_cat_fail/generated_samples
+```
+- 結果存在experiments/dog_cat/generated_samples裡面
+
+### 跑 evaluate.py -> 評估指標
+for TextVP:
+```
+    python Code/evaluate.py \
+    --input_path experiments/dog_cat/generated_samples \
+    --source_path Dataset/dog_cat/test    \
+    --output_path experiments/dog_cat/evaluate    \
+    --vp_base Dataset/dog_cat/train/dog_01    \
+    --device "cuda:1"
+```    
+- 結果存在experiments/dog_cat/evaluate裡面
+
+for visii:
+```
+    python Code/evaluate.py \
+    --input_path visii/results/cat_watercolor \
+    --source_path Dataset/cat_watercolor/test    \
+    --output_path visii/results/cat_watercolor/evaluate    \
+    --vp_base Dataset/cat_watercolor/train/cat_01    \
+    --device "cuda:1"
+```
+- 結果存在visii/results/cat_watercolor/evaluate裡面

@@ -1,0 +1,35 @@
+__pycache__/
+*.py[cod]
+
+# 忽略常見的大型權重檔
+*.pth
+*.ckpt
+*.safetensors
+*.bin
+*.h5
+model_weights/
+
+
+dataset_old/
+
+
+# 1. 先忽略 experiments 資料夾下的所有東西
+experiments/*
+
+# 2. (例外) 不要忽略 cat_dog 資料夾
+!experiments/cat_dog/
+
+# 3. (例外) 不要忽略 cat_dog 資料夾裡面的所有檔案
+!experiments/cat_dog/**     
+
+visii/Dataset/*
+!visii/Dataset/cat_dog/
+!visii/Dataset/cat_dog/**
+
+visii/logs/*
+!visii/logs/cat_dog/
+!visii/logs/cat_dog/**
+
+visii/results/*
+!visii/results/cat_dog/
+!visii/results/cat_dog/**

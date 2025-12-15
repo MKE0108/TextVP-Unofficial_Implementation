@@ -1,0 +1,31 @@
+{
+  "exp_dir": "experiments/cat_dog",
+  "exp_name": "cross_replace=[0.2, 1.0],self_replace=0.0,encoded=False,guidance_scale=1.0,",
+  "source_image_path": "Dataset/cat_dog/train/cat_01_before.png",
+  "target_image_path": "Dataset/cat_dog/train/cat_01_after.png",
+  "test_image_pattern": "Dataset/cat_dog/test/*_before.png",
+  "low_resource": false,
+  "num_diffusion_steps": 50,
+  "cross_replace_step": [
+    0.2,
+    1.0
+  ],
+  "guidance_scale": 1.0,
+  "encoded_emb": false,
+  "self_replace_step": 0.0,
+  "coarse_description": "a dog",
+  "lr": 0.001,
+  "num_epochs": 50,
+  "save_interval": 1,
+  "beta_weighting": true,
+  "test_epochs": [
+    0,
+    5,
+    10,
+    20,
+    30,
+    40,
+    49
+  ],
+  "optimizer_cls": "<class 'torch.optim.adamw.AdamW'>"
+}
