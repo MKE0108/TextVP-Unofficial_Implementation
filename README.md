@@ -236,3 +236,16 @@ for visii:
     --device "cuda:1"
 ```
 - 結果存在visii/results/cat_watercolor/evaluate裡面
+
+
+### 做出比較圖:
+```
+    python Code/compare_metrics.py \
+    --dir1 visii/results \
+    --name1 Visii \
+    --dir2 experiments \
+    --name2 TextVP \
+    --output metrics_comparison/dog.png     \
+    --prefix dog
+```
+- 結果存在metrics_comparison
