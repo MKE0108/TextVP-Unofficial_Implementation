@@ -153,9 +153,13 @@ This is an unofficial implementation and is not affiliated with the original aut
 
 # For Po Han's Update
 
+## Remarks
+- 因為檔案太過龐大的關係, TextVP和visii的experiments都只上傳了dog_cat實驗 
+
 ## For visii
-要先另外創一個conda環境 (跟TextVP分開)
-並且 ```cd visii```
+1. 要先另外創一個conda環境 (跟TextVP分開)
+2. 並且 ```cd visii```
+3. 然後把TextVP的Dataset也複製到visii裡面
 
 ### 跑training
 ```
