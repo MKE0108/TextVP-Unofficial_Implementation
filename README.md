@@ -242,7 +242,7 @@ for visii:
 - 結果存在visii/results/cat_watercolor/evaluate裡面
 
 
-### 做出比較圖:
+### 做出評估比較圖:
 ```
     python Code/compare_metrics.py \
     --dir1 visii/results \
@@ -253,3 +253,7 @@ for visii:
     --prefix dog
 ```
 - 結果存在metrics_comparison
+
+### 做出生成圖片比較圖:
+- cat: 用watercolor
+- dog: 用wolf
